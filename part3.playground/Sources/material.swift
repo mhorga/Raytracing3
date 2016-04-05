@@ -15,7 +15,7 @@ class lambertian: material {
     func scatter(ray_in: ray, _ rec: hit_record, inout _ attenuation: float3, inout _ scattered: ray) -> Bool {
         let target = rec.p + rec.normal + random_in_unit_sphere()
         scattered = ray(origin: rec.p, direction: target - rec.p)
-        attenuation = float3(0.5, 0.5, 0.5) // albedo
+        attenuation = albedo
         return true
     }
 }
@@ -30,7 +30,7 @@ class metal: material {
     func scatter(ray_in: ray, _ rec: hit_record, inout _ attenuation: float3, inout _ scattered: ray) -> Bool {
         let reflected = reflect(normalize(ray_in.direction), n: rec.normal)
         scattered = ray(origin: rec.p, direction: reflected)
-        attenuation = float3(0.5, 0.5, 0.5) // albedo
+        attenuation = albedo // float3(0.5, 0.5, 0.5)
         return dot(scattered.direction, rec.normal) > 0
     }
 }

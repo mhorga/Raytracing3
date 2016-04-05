@@ -59,6 +59,7 @@ class sphere: hitable  {
                 rec.t = t
                 rec.p = r.point_at_parameter(rec.t)
                 rec.normal = (rec.p - center) / float3(radius)
+                rec.mat_ptr = mat
                 return true
             }
         }
