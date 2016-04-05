@@ -6,12 +6,12 @@ struct hit_record {
     var t: Float
     var p: float3
     var normal: float3
-    var mat_ptr: metal
+    var mat_ptr: material
     init() {
         t = 0.0
         p = float3()
         normal = float3()
-        mat_ptr = metal(a: float3())
+        mat_ptr = metal(a: float3(), f: Float())
     }
 }
 
@@ -38,8 +38,8 @@ class hitable_list: hitable  {
 class sphere: hitable  {
     var center = float3(x: 0.0, y: 0.0, z: 0.0)
     var radius = Float(0.0)
-    var mat: metal
-    init(c: float3, r: Float, m: metal) {
+    var mat: material
+    init(c: float3, r: Float, m: material) {
         center = c
         radius = r
         mat = m

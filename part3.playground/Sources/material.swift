@@ -22,19 +22,21 @@ class lambertian: material {
 
 class metal: material {
     var albedo: float3
+    var fuzz: Float
     
-    init(a: float3) {
+    init(a: float3, f: Float) {
         albedo = a
+        if f < 1 {
+            fuzz = f
+        } else {
+            fuzz = 1
+        }
     }
     
     func scatter(ray_in: ray, _ rec: hit_record, inout _ attenuation: float3, inout _ scattered: ray) -> Bool {
         let reflected = reflect(normalize(ray_in.direction), n: rec.normal)
-        scattered = ray(origin: rec.p, direction: reflected)
-        attenuation = albedo // float3(0.5, 0.5, 0.5)
+        scattered = ray(origin: rec.p, direction: reflected + fuzz * random_in_unit_sphere())
+        attenuation = albedo
         return dot(scattered.direction, rec.normal) > 0
     }
 }
-
-//func reflect(v: float3, _ n: float3) -> float3 {
-//    return v - 2 * dot(v, n) * n
-//}
